@@ -1588,7 +1588,7 @@ class Webhook(BaseWebhook):
         embed: Embed = MISSING,
         embeds: Sequence[Embed] = MISSING,
         allowed_mentions: AllowedMentions = MISSING,
-        view: View = MISSING,
+        view: Optional[View] = MISSING,
         thread: Snowflake = MISSING,
         thread_name: str = MISSING,
         wait: Literal[True],
@@ -1611,7 +1611,7 @@ class Webhook(BaseWebhook):
         embed: Embed = MISSING,
         embeds: Sequence[Embed] = MISSING,
         allowed_mentions: AllowedMentions = MISSING,
-        view: View = MISSING,
+        view: Optional[View] = MISSING,
         thread: Snowflake = MISSING,
         thread_name: str = MISSING,
         wait: Literal[False] = ...,
@@ -1633,7 +1633,7 @@ class Webhook(BaseWebhook):
         embed: Embed = MISSING,
         embeds: Sequence[Embed] = MISSING,
         allowed_mentions: AllowedMentions = MISSING,
-        view: View = MISSING,
+        view: Optional[View] = MISSING,
         thread: Snowflake = MISSING,
         thread_name: str = MISSING,
         wait: bool = False,
@@ -1769,7 +1769,7 @@ class Webhook(BaseWebhook):
         if application_webhook:
             wait = True
 
-        if view is not MISSING:
+        if view is not None and view is not MISSING:
             if isinstance(self._state, _WebhookState):
                 raise ValueError('Webhook views require an associated state with the webhook')
 
@@ -1819,7 +1819,7 @@ class Webhook(BaseWebhook):
         if wait:
             msg = self._create_message(data, thread=thread)
 
-        if view is not MISSING and not view.is_finished():
+        if view is not None and view is not MISSING and not view.is_finished():
             message_id = None if msg is None else msg.id
             self._state.store_view(view, message_id)
 

@@ -720,7 +720,7 @@ class InteractionResponse(Generic[ClientT]):
         embeds: Sequence[Embed] = MISSING,
         file: File = MISSING,
         files: Sequence[File] = MISSING,
-        view: View = MISSING,
+        view: Optional[View] = MISSING,
         tts: bool = False,
         ephemeral: bool = False,
         allowed_mentions: AllowedMentions = MISSING,
@@ -819,7 +819,7 @@ class InteractionResponse(Generic[ClientT]):
             params=params,
         )
 
-        if view is not MISSING and not view.is_finished():
+        if view is not None and view is not MISSING and not view.is_finished():
             if ephemeral and view.timeout is None:
                 view.timeout = 15 * 60.0
 
